@@ -159,7 +159,7 @@ createRestaurantHTML = (restaurant) => {
   let html=`<div class='card restaurant-card col-md-3'>
                 <div class='card-header'><h4>${restaurant.name}</h4></div>
                 <div class='card-body'>
-                <img class='restaurant-img' src='${DBHelper.imageUrlForRestaurant(restaurant)}'></img>
+                <img class='restaurant-img' src='${DBHelper.imageUrlForRestaurant(restaurant)}' alt='Image of restaruant'></img>
                 <p class="mt-3 address"><span class="text-info mx-1">Address:</span>${restaurant.address}, ${restaurant.neighborhood}</p>
                 <a href='${DBHelper.urlForRestaurant(restaurant)}'>View Details</a>
                 </div>
