@@ -47,11 +47,8 @@ body {
 .inside {
   background-color: #f3f3f3;
 }
-#maincontent {
-}
-#detail {
-  width: 40%;
-  padding-right: 5%;
+#map-container-detail #map {
+  height: 100%;;
 }
 img {
   width: 100%;
@@ -84,8 +81,47 @@ img {
   font-weight: bold;
   font-size: 1rem;
 }
+#detail {
+  width: 40%;
+  margin-right: 5%;
+}
+#map-container-detail {
+  width: 55%;
+}
+.maindetailflex {
+  flex-direction: row;
+}
+#reviews-container {
+  font-size: 1.1rem;
+}
+#reviews-container ul li {
+  list-style: none;
+}
+/* Extra small devices (portrait phones, less than 576px) */
 @media (max-width: 575.98px) { 
   #footer {
     padding-top: 0;
   }
 }
+
+/* Small devices (landscape phones, less than 768px) */
+@media (max-width: 767.98px) { 
+  
+}
+
+/* Medium devices (tablets, less than 992px) */
+@media (max-width: 1200px) {
+  .maindetailflex {
+    flex-direction: column-reverse;
+  }
+  #detail {
+    width: 100%;
+  }
+  #map-container-detail {
+    width: 100%;
+  }
+  
+#map-container-detail #map {
+  height: 33rem;
+}
+ }
