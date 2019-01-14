@@ -22,7 +22,7 @@ initMap = () => {
         scrollWheelZoom: false
       });
       L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.jpg70?access_token={mapboxToken}', {
-        mapboxToken: '<your MAPBOX API KEY HERE>',
+        mapboxToken: 'pk.eyJ1Ijoic3JpZGhhbnlhZyIsImEiOiJjanF0MzdubTAwNWp2NDJtamt0ZnR0aXFuIn0.VMEvcCgBgF29MSgEvfuncg',
         maxZoom: 18,
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
           '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
@@ -80,24 +80,25 @@ fetchRestaurantFromURL = (callback) => {
  * Create restaurant HTML and add it to the webpage
  */
 fillRestaurantHTML = (restaurant = self.restaurant) => {
-  const name = document.getElementById('restaurant-name');
-  name.innerHTML = restaurant.name;
-
-  const address = document.getElementById('restaurant-address');
-  address.innerHTML = restaurant.address;
-
-  const image = document.getElementById('restaurant-img');
-  image.className = 'restaurant-img'
-  image.src = DBHelper.imageUrlForRestaurant(restaurant);
-
-  const cuisine = document.getElementById('restaurant-cuisine');
-  cuisine.innerHTML = restaurant.cuisine_type;
-
-  // fill operating hours
+  let operatingHours = ''
   if (restaurant.operating_hours) {
-    fillRestaurantHoursHTML();
+    for (let key in restaurant.operating_hours) {
+      let temp = `
+      <tr><td>${key}</td><td>${restaurant.operating_hours[key]}</td></tr>
+      `
+      operatingHours += temp
+    }
   }
-  // fill reviews
+  let template = `
+  <h3 id="restaurant-name" class="text-warning">${restaurant.name}</h3>
+  <img id="restaurant-img" src="${DBHelper.imageUrlForRestaurant(restaurant)}"></img>
+  <p id="restaurant-cuisine"  class="cuisine">${restaurant.cuisine_type}</p>
+  <p id="restaurant-address">${restaurant.address}</p>
+  <table id="restaurant-hours">${operatingHours}</table>
+  `
+  const name = document.getElementById('restaurant-container');
+  name.innerHTML = template;  
+    // fill reviews
   fillReviewsHTML();
 }
 
@@ -173,6 +174,8 @@ createReviewHTML = (review) => {
 fillBreadcrumb = (restaurant=self.restaurant) => {
   const breadcrumb = document.getElementById('breadcrumb');
   const li = document.createElement('li');
+  li.classList.add('breadcrumb-item')
+  li.classList.add('active')
   li.innerHTML = restaurant.name;
   breadcrumb.appendChild(li);
 }

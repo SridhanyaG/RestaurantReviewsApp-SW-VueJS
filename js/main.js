@@ -78,7 +78,7 @@ initMap = () => {
         scrollWheelZoom: false
       });
   L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.jpg70?access_token={mapboxToken}', {
-    mapboxToken: '<your MAPBOX API KEY HERE>',
+    mapboxToken: 'pk.eyJ1Ijoic3JpZGhhbnlhZyIsImEiOiJjanF0MzdubTAwNWp2NDJtamt0ZnR0aXFuIn0.VMEvcCgBgF29MSgEvfuncg',
     maxZoom: 18,
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
       '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
@@ -130,8 +130,8 @@ updateRestaurants = () => {
 resetRestaurants = (restaurants) => {
   // Remove all restaurants
   self.restaurants = [];
-  const ul = document.getElementById('restaurants-list');
-  ul.innerHTML = '';
+  const div = document.getElementById('restaurants-list');
+  div.innerHTML = '';
 
   // Remove all map markers
   if (self.markers) {
@@ -145,9 +145,9 @@ resetRestaurants = (restaurants) => {
  * Create all restaurants HTML and add them to the webpage.
  */
 fillRestaurantsHTML = (restaurants = self.restaurants) => {
-  const ul = document.getElementById('restaurants-list');
+  const div = document.getElementById('restaurants-list');
   restaurants.forEach(restaurant => {
-    ul.append(createRestaurantHTML(restaurant));
+    div.append(createRestaurantHTML(restaurant));
   });
   addMarkersToMap();
 }
@@ -156,31 +156,19 @@ fillRestaurantsHTML = (restaurants = self.restaurants) => {
  * Create restaurant HTML.
  */
 createRestaurantHTML = (restaurant) => {
-  const li = document.createElement('li');
+  let html=`<div class='card restaurant-card col-md-3'>
+                <div class='card-header'><h4>${restaurant.name}</h4></div>
+                <div class='card-body'>
+                <img class='restaurant-img' src='${DBHelper.imageUrlForRestaurant(restaurant)}'></img>
+                <p class="mt-3 address"><span class="text-info mx-1">Address:</span>${restaurant.address}, ${restaurant.neighborhood}</p>
+                <a href='${DBHelper.urlForRestaurant(restaurant)}'>View Details</a>
+                </div>
+                </div>`
+  const template = document.createElement('template');
 
-  const image = document.createElement('img');
-  image.className = 'restaurant-img';
-  image.src = DBHelper.imageUrlForRestaurant(restaurant);
-  li.append(image);
+  template.innerHTML = html.trim();
 
-  const name = document.createElement('h1');
-  name.innerHTML = restaurant.name;
-  li.append(name);
-
-  const neighborhood = document.createElement('p');
-  neighborhood.innerHTML = restaurant.neighborhood;
-  li.append(neighborhood);
-
-  const address = document.createElement('p');
-  address.innerHTML = restaurant.address;
-  li.append(address);
-
-  const more = document.createElement('a');
-  more.innerHTML = 'View Details';
-  more.href = DBHelper.urlForRestaurant(restaurant);
-  li.append(more)
-
-  return li
+  return template.content.firstChild
 }
 
 /**
