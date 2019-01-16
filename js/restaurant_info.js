@@ -91,10 +91,11 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
   }
   let template = `
   <h2 id="restaurant-name" class="text-warning">${restaurant.name}</h2>
-  <img id="restaurant-img" src="${DBHelper.imageUrlForRestaurant(restaurant)}" alt='Image of ${restaurant.name} restaruant'></img>
+  <img id="restaurant-img" aria-describedby='detailaria' src="${DBHelper.imageUrlForRestaurant(restaurant)}" alt='Image of ${restaurant.name} restaruant'></img>
   <p id="restaurant-cuisine"  class="cuisine">${restaurant.cuisine_type}</p>
   <p id="restaurant-address">${restaurant.address}</p>
   <table id="restaurant-hours">${operatingHours}</table>
+  <span id="detailaria" aria-hidden="true">Address of restaurant is ${restaurant.address}</span>
   `
   const name = document.getElementById('restaurant-container');
   name.innerHTML = template;  
