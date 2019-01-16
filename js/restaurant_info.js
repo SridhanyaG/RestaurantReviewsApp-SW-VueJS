@@ -90,8 +90,8 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
     }
   }
   let template = `
-  <h3 id="restaurant-name" class="text-warning">${restaurant.name}</h3>
-  <img id="restaurant-img" src="${DBHelper.imageUrlForRestaurant(restaurant)}" alt='Image of restaruant'></img>
+  <h2 id="restaurant-name" class="text-warning">${restaurant.name}</h2>
+  <img id="restaurant-img" src="${DBHelper.imageUrlForRestaurant(restaurant)}" alt='Image of ${restaurant.name} restaruant'></img>
   <p id="restaurant-cuisine"  class="cuisine">${restaurant.cuisine_type}</p>
   <p id="restaurant-address">${restaurant.address}</p>
   <table id="restaurant-hours">${operatingHours}</table>
